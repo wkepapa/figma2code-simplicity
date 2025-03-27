@@ -72,6 +72,16 @@ const Navbar = () => {
                 Products
               </NavLink>
             </li>
+            <li>
+              <NavLink 
+                to="/donate" 
+                className={({ isActive }) => 
+                  `navbar-link ${isActive ? "active" : ""}`
+                }
+              >
+                Donate
+              </NavLink>
+            </li>
           </ul>
         </div>
 
@@ -126,6 +136,14 @@ const Navbar = () => {
                 className="block py-2 text-lg font-medium"
               >
                 Products
+              </NavLink>
+            </li>
+            <li>
+              <NavLink 
+                to="/donate" 
+                className="block py-2 text-lg font-medium"
+              >
+                Donate
               </NavLink>
             </li>
             <li className="pt-4">
