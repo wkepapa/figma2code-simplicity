@@ -153,12 +153,6 @@ const Donate = () => {
           </div>
         </div>
       </section>
-      
-      <ImageShowcase 
-        variant="grid"
-        title="Impact Gallery" 
-        description="See how your contributions are making a difference in communities worldwide."
-      />
     </Layout>
   );
 };
