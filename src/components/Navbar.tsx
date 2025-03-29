@@ -64,12 +64,12 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink 
-                to="/products" 
+                to="/volunteer" 
                 className={({ isActive }) => 
                   `navbar-link ${isActive ? "active" : ""}`
                 }
               >
-                Products
+                Volunteer
               </NavLink>
             </li>
             <li>
@@ -132,10 +132,10 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink 
-                to="/products" 
+                to="/volunteer" 
                 className="block py-2 text-lg font-medium"
               >
-                Products
+                Volunteer
               </NavLink>
             </li>
             <li>

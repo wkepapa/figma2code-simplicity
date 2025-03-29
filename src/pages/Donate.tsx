@@ -3,8 +3,7 @@ import React, { useEffect } from "react";
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, BadgeIndianRupee, Users } from "lucide-react";
-import MapComponent from "@/components/MapComponent";
+import { Heart, BadgeIndianRupee, Users, Smartphone, CreditCard, Wallet } from "lucide-react";
 import ImageShowcase from "@/components/ImageShowcase";
 
 const Donate = () => {
@@ -38,6 +37,27 @@ const Donate = () => {
       description: "Support our work with a one-time donation of any amount.",
       icon: <BadgeIndianRupee className="text-green-500" />,
       period: "once"
+    }
+  ];
+
+  const paymentMethods = [
+    {
+      id: 1,
+      name: "UPI",
+      icon: <Smartphone className="text-purple-500" />,
+      description: "Pay directly using any UPI app like Google Pay, PhonePe, Paytm, etc."
+    },
+    {
+      id: 2,
+      name: "Credit/Debit Card",
+      icon: <CreditCard className="text-blue-500" />,
+      description: "Pay securely using your credit or debit card."
+    },
+    {
+      id: 3,
+      name: "Net Banking",
+      icon: <Wallet className="text-green-500" />,
+      description: "Transfer funds directly from your bank account."
     }
   ];
 
@@ -98,13 +118,28 @@ const Donate = () => {
             ))}
           </div>
           
-          <div className="max-w-full mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100 animate-fade-in mb-16">
-            <h2 className="text-2xl font-semibold mb-4">Locate Us</h2>
-            <p className="text-gray-700 mb-6">
-              Visit our offices to learn more about our mission and how you can get involved. We'd love to meet you and discuss how we can work together.
+          <div className="max-w-3xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100 animate-fade-in mb-16">
+            <h2 className="text-2xl font-semibold mb-4">Payment Methods</h2>
+            <p className="text-gray-700 mb-8">
+              We offer multiple convenient payment options to make your donation process seamless.
             </p>
-            <div className="h-[400px] w-full rounded-lg overflow-hidden mb-6">
-              <MapComponent />
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {paymentMethods.map((method) => (
+                <div key={method.id} className="bg-white p-6 rounded-xl border border-gray-100 shadow-subtle">
+                  <div className="flex items-center mb-3">
+                    <div className="h-10 w-10 rounded-full bg-gray-50 flex items-center justify-center mr-3">
+                      {method.icon}
+                    </div>
+                    <h3 className="font-semibold text-lg">{method.name}</h3>
+                  </div>
+                  <p className="text-gray-600 text-sm">{method.description}</p>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-8 text-center">
+              <Button variant="primary">Proceed to Donate</Button>
             </div>
           </div>
           
@@ -113,6 +148,7 @@ const Donate = () => {
             <p className="text-gray-700 mb-6">
               Beyond financial contributions, you can support our mission by volunteering, spreading the word about our work, or collaborating with us on projects.
             </p>
+            <Button variant="outline" className="mr-4">Volunteer With Us</Button>
             <Button variant="outline">Contact Us</Button>
           </div>
         </div>

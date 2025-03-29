@@ -5,6 +5,8 @@ import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Button from "@/components/Button";
 import ImageShowcase from "@/components/ImageShowcase";
+import Testimonials from "@/components/Testimonials";
+import FeedbackForm from "@/components/FeedbackForm";
 import { ArrowRight } from "lucide-react";
 
 const Index = () => {
@@ -46,6 +48,32 @@ const Index = () => {
                 alt="People collaborating on a project" 
                 className="w-full h-auto"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <Testimonials />
+      
+      <section className="py-20">
+        <div className="page-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="animate-fade-in">
+              <h2 className="text-3xl font-bold mb-6">Share Your Thoughts</h2>
+              <p className="text-gray-700 mb-8">
+                We value your feedback as it helps us improve our work and better serve our communities. Please take a moment to share your experience with us.
+              </p>
+              <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" 
+                  alt="Person writing feedback" 
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+            
+            <div className="animate-fade-in">
+              <FeedbackForm />
             </div>
           </div>
         </div>
