@@ -1,43 +1,106 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { MapPin } from 'lucide-react';
+import { MapPin, ArrowRight } from 'lucide-react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
-// This is a placeholder implementation of a map that doesn't require external API keys
-// In a production app, you would integrate with a real mapping service like Google Maps or Mapbox
 const MapComponent = () => {
   const [mapApiKey, setMapApiKey] = useState<string>('');
   const [showPlaceholder, setShowPlaceholder] = useState(true);
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
 
-  // Simulated map location
-  const officeLocations = [
-    { id: 1, name: "Headquarters", address: "123 Tech Park, Bangalore, Karnataka", lat: 12.9716, lng: 77.5946 },
-    { id: 2, name: "Delhi Office", address: "456 Innovation Hub, New Delhi", lat: 28.6139, lng: 77.2090 },
-    { id: 3, name: "Mumbai Office", address: "789 Startup Street, Mumbai, Maharashtra", lat: 19.0760, lng: 72.8777 },
-  ];
+  // Mumbai office location
+  const officeLocation = {
+    name: "Human Team Foundation",
+    address: "Sion Trombay Road",
+    city: "Mumbai",
+    state: "Maharashtra",
+    pincode: "400071",
+    phone: "+91 97694 06488",
+    coordinates: [72.8777, 19.0760] // Longitude, Latitude
+  };
 
   const handleApiKeySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (mapApiKey) {
       setShowPlaceholder(false);
-      // In a real implementation, you would initialize the map API here
+      
+      // Initialize map with provided API key
+      setTimeout(() => {
+        if (!mapContainerRef.current) return;
+        
+        mapboxgl.accessToken = mapApiKey;
+        
+        try {
+          mapRef.current = new mapboxgl.Map({
+            container: mapContainerRef.current,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: officeLocation.coordinates,
+            zoom: 15
+          });
+          
+          // Add navigation controls
+          mapRef.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+          
+          // Add marker for office location
+          const marker = new mapboxgl.Marker({ color: "#0039a6" })
+            .setLngLat(officeLocation.coordinates)
+            .setPopup(new mapboxgl.Popup().setHTML(`
+              <strong>${officeLocation.name}</strong><br>
+              ${officeLocation.address}<br>
+              ${officeLocation.city}, ${officeLocation.state} ${officeLocation.pincode}
+            `))
+            .addTo(mapRef.current);
+          
+          // Open popup by default
+          marker.togglePopup();
+          
+        } catch (error) {
+          console.error("Error initializing map:", error);
+          setShowPlaceholder(true);
+        }
+      }, 100);
     }
   };
 
+  // Clean up map on unmount
+  useEffect(() => {
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+      }
+    };
+  }, []);
+
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-[500px] rounded-lg overflow-hidden">
       {showPlaceholder ? (
-        <div className="bg-gray-100 w-full h-full flex flex-col items-center justify-center rounded-lg p-6">
+        <div className="bg-gray-50 w-full h-full flex flex-col items-center justify-center rounded-lg p-6">
           <div className="max-w-md w-full">
-            <h3 className="text-lg font-semibold mb-2">Map Preview</h3>
-            <p className="text-gray-600 mb-4">
-              To display an interactive map, you would need to connect to a mapping service like Google Maps or Mapbox.
+            <h3 className="text-xl font-semibold mb-2">Our Location</h3>
+            <p className="text-gray-600 mb-6">
+              Find us at our Mumbai office. You can enter a Mapbox API key below to view an interactive map.
             </p>
+            
+            <div className="p-5 rounded-lg border border-gray-200 bg-white mb-6 shadow-sm">
+              <div className="flex flex-col gap-1 mb-4">
+                <h4 className="font-medium text-lg">{officeLocation.name}</h4>
+                <p className="text-gray-700">{officeLocation.address}</p>
+                <p className="text-gray-700">{officeLocation.city}, {officeLocation.state}</p>
+                <p className="text-gray-700">{officeLocation.pincode}</p>
+                <p className="text-gray-700 mt-2">{officeLocation.phone}</p>
+              </div>
+              
+              <button className="text-blue-600 flex items-center text-sm font-medium">
+                Get Directions <ArrowRight size={14} className="ml-1" />
+              </button>
+            </div>
             
             <div className="bg-white p-4 rounded-lg shadow-sm mb-4">
               <form onSubmit={handleApiKeySubmit} className="flex flex-col gap-2">
                 <label htmlFor="map-api-key" className="text-sm font-medium">
-                  Enter your map API key:
+                  Enter your Mapbox API key:
                 </label>
                 <input
                   id="map-api-key"
@@ -55,27 +118,21 @@ const MapComponent = () => {
                 </button>
               </form>
             </div>
-            
-            <div className="space-y-4">
-              {officeLocations.map(location => (
-                <div key={location.id} className="flex items-start gap-3 bg-white p-3 rounded-lg shadow-sm">
-                  <MapPin className="text-red-500 mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium">{location.name}</h4>
-                    <p className="text-sm text-gray-600">{location.address}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       ) : (
-        <div ref={mapContainerRef} className="w-full h-full bg-blue-50 rounded-lg">
-          {/* Map would be rendered here in a real implementation */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <p>Map would be displayed here with API key: {mapApiKey}</p>
+        <>
+          <div ref={mapContainerRef} className="w-full h-full" />
+          <div className="absolute top-4 left-4 bg-white p-4 rounded-lg shadow-md z-10 max-w-xs">
+            <h4 className="font-medium">{officeLocation.name}</h4>
+            <p className="text-sm text-gray-600">{officeLocation.address}, {officeLocation.city}</p>
+            <p className="text-sm text-gray-600">{officeLocation.state} {officeLocation.pincode}</p>
+            <p className="text-sm text-gray-600 mt-1">{officeLocation.phone}</p>
+            <button className="text-blue-600 flex items-center text-sm font-medium mt-2">
+              Get Directions <ArrowRight size={14} className="ml-1" />
+            </button>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

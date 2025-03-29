@@ -2,6 +2,8 @@
 import React, { useEffect } from "react";
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
+import MapComponent from "@/components/MapComponent";
+import ImageShowcase from "@/components/ImageShowcase";
 
 const About = () => {
   // Scroll to top on page load
@@ -31,6 +33,13 @@ const About = () => {
                 Since our founding, we've partnered with organizations of all sizes to bring this human-centered philosophy to life in their products and services. Our work spans industries, but our approach remains consistent: we start with human needs and build technology to serve them.
               </p>
             </div>
+
+            <ImageShowcase 
+              title="Our Team" 
+              description="Meet the people behind Human Team Foundation" 
+              variant="grid" 
+              className="my-12" 
+            />
             
             <div className="mt-12 bg-gray-50 rounded-2xl p-8 border border-gray-100 animate-fade-in">
               <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
@@ -61,12 +70,17 @@ const About = () => {
                 </li>
               </ul>
             </div>
-            
-            <div className="mt-12 text-center animate-fade-in">
-              <Button variant="primary" size="lg">
-                Join Our Team
-              </Button>
-            </div>
+          </div>
+
+          <div className="max-w-4xl mx-auto mt-16">
+            <h2 className="text-3xl font-bold mb-6">Find Us</h2>
+            <MapComponent />
+          </div>
+          
+          <div className="max-w-3xl mx-auto mt-12 text-center animate-fade-in">
+            <Button variant="primary" size="lg">
+              Join Our Team
+            </Button>
           </div>
         </div>
       </section>
