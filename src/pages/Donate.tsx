@@ -3,7 +3,9 @@ import React, { useEffect } from "react";
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, CreditCard, Users } from "lucide-react";
+import { Heart, BadgeIndianRupee, Users } from "lucide-react";
+import MapComponent from "@/components/MapComponent";
+import ImageShowcase from "@/components/ImageShowcase";
 
 const Donate = () => {
   // Scroll to top on page load
@@ -15,7 +17,7 @@ const Donate = () => {
     {
       id: 1,
       name: "Monthly Supporter",
-      amount: "$10",
+      amount: "₹750",
       description: "Join our community of monthly supporters helping sustain our work.",
       icon: <Heart className="text-red-500" />,
       period: "monthly"
@@ -23,7 +25,7 @@ const Donate = () => {
     {
       id: 2,
       name: "Annual Donor",
-      amount: "$100",
+      amount: "₹7,500",
       description: "Make a bigger impact with an annual contribution to our mission.",
       icon: <Users className="text-blue-500" />,
       period: "yearly",
@@ -34,13 +36,19 @@ const Donate = () => {
       name: "One-time Gift",
       amount: "Custom",
       description: "Support our work with a one-time donation of any amount.",
-      icon: <CreditCard className="text-green-500" />,
+      icon: <BadgeIndianRupee className="text-green-500" />,
       period: "once"
     }
   ];
 
   return (
     <Layout>
+      <ImageShowcase 
+        variant="banner"
+        title="Support Our Mission" 
+        description="Your contribution makes our work possible and helps us create a better future."
+      />
+      
       <section className="py-16 md:py-24">
         <div className="page-container">
           <div className="max-w-3xl mx-auto text-center mb-16">
@@ -90,6 +98,16 @@ const Donate = () => {
             ))}
           </div>
           
+          <div className="max-w-full mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100 animate-fade-in mb-16">
+            <h2 className="text-2xl font-semibold mb-4">Locate Us</h2>
+            <p className="text-gray-700 mb-6">
+              Visit our offices to learn more about our mission and how you can get involved. We'd love to meet you and discuss how we can work together.
+            </p>
+            <div className="h-[400px] w-full rounded-lg overflow-hidden mb-6">
+              <MapComponent />
+            </div>
+          </div>
+          
           <div className="max-w-3xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100 animate-fade-in">
             <h2 className="text-2xl font-semibold mb-4">Other Ways to Support</h2>
             <p className="text-gray-700 mb-6">
@@ -99,6 +117,12 @@ const Donate = () => {
           </div>
         </div>
       </section>
+      
+      <ImageShowcase 
+        variant="grid"
+        title="Impact Gallery" 
+        description="See how your contributions are making a difference in communities worldwide."
+      />
     </Layout>
   );
 };
